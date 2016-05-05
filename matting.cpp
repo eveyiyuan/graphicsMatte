@@ -25,15 +25,18 @@ void simpleMatte(const Vec3b &bg, const Mat &input, Mat &output, float thresh) {
 			if(colorDiff(bg, color) < thresh) {
 				output.at<uchar>(y,x) = 0;
 			}
+			else {
+				output.at<uchar>(y,x) = 255;
+			}
 		}
 	}
 }
 
 int main(int argc, char**argv)
 {
-	float thresh = atof(argv[1]);
-	Mat input = imread("test.png", CV_LOAD_IMAGE_COLOR);
-	Mat output = imread("test.png", CV_LOAD_IMAGE_GRAYSCALE);
+	float thresh = atof(argv[2]);
+	Mat input = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+	Mat output = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
 
 	simpleMatte(Vec3b(200,240,0), input, output, thresh);
 	namedWindow("Display", WINDOW_AUTOSIZE);
