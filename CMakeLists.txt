@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project( matting )
+find_package( OpenCV REQUIRED )
+add_executable( matting matting.cpp )
+target_link_libraries( matting ${OpenCV_LIBS} )
