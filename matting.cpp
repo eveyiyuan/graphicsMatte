@@ -94,8 +94,6 @@ int main(int argc, char**argv)
 			break;
 		}
 	}
-	// imshow("Display", input);
-	// waitKey(0);
 	simpleMatte(Vec3b(200,240,0), input, grey, thresh);
 	imshow("Display", grey);
 	waitKey(0);
