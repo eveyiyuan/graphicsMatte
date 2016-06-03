@@ -1,7 +1,10 @@
 #include <opencv2/opencv.hpp>
 #include <math.h>
 #include <stdlib.h>
+#include <iostream>
+#include <cstdio>
 
+using namespace std;
 using namespace cv;
 
 // Calculates a numerical difference between 2 pixels
@@ -31,16 +34,30 @@ void simpleMatte(const Vec3b &bg, const Mat &input, Mat &output, float thresh) {
 		}
 	}
 }
-
+void CallBackFunc(int event, int x, int y, int flags, void* userdata) {
+	Mat* source = (Mat*) userdata;
+	Vec3b bgColor;
+	Vec3b targetColor;
+	if (event == EVENT_LBUTTONDOWN) {
+		cout << "Left button " << x << "," << y << endl;
+		bgColor = (*source).at<Vec3b>(y, x);
+	}
+	else if (event == EVENT_RBUTTONDOWN) {
+		cout << "Right button " << x << "," << y << endl;
+		targetColor = (*source).at<Vec3b>(y, x);
+	}
+}
 int main(int argc, char**argv)
 {
 	float thresh = atof(argv[2]);
 	Mat input = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	Mat output = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
 
+
 	simpleMatte(Vec3b(200,240,0), input, output, thresh);
 	namedWindow("Display", WINDOW_AUTOSIZE);
-	imshow("Display", output);
+	setMouseCallback("Display", CallBackFunc, &input);
+	imshow("Display", input);
 	waitKey(0);
 
 	return 0;
