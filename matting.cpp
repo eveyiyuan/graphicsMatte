@@ -49,26 +49,21 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata) {
 
 	if (event == EVENT_LBUTTONDOWN) {
 		cout << "Left button " << x << "," << y << endl;
+		(*source).at<uchar>(y, x) = 0;
 		drawBg = true;
-		// (*source).at<uchar>(y, x) = 0;
-		// changeSquare(*source, x, y, 10, 0);
 	}
 	else if (event == EVENT_RBUTTONDOWN) {
 		cout << "Right button " << x << "," << y << endl;
+		(*source).at<uchar>(y, x) = 255;
 		drawFore = true;
-		// (*source).at<uchar>(y, x) = 255;
-		// changeSquare(*source, x, y, 10, 255);
 	}
 	else if (event == EVENT_MOUSEMOVE) {
 		
 		if (drawBg == true) {
-			cout << "Mouse move " << x << "," << y << endl;
-			(*source).at<uchar>(y, x) = 0;
-			changeSquare(*source, x, y, 10, 0);
+			circle(*source, Point(x,y), 5, 0, -1);
 		}
 		else if (drawFore == true) {
-			(*source).at<uchar>(y, x) = 255;
-			changeSquare(*source, x, y, 10, 255);			
+			circle(*source, Point(x,y), 5, 255, -1);			
 		}
 	}
 	else if (event == EVENT_LBUTTONUP) {
