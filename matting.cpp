@@ -100,12 +100,14 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata) {
 	}
 }
 
-
 int main(int argc, char**argv)
 {
 	Mat input = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	Mat grey = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
 	Mat input2 = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+
+	Mat dest = imread(argv[2]);
+	Mat src = imread(argv[1]);
 
 
 	
@@ -121,8 +123,8 @@ int main(int argc, char**argv)
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
 
-	generateProbs(fore_probs, input, fore_data, 0.001);
-	generateProbs(bg_probs, input, bg_data, 0.001);
+	generateProbs(fore_probs, input, fore_data, 0.01);
+	generateProbs(bg_probs, input, bg_data, 0.01);
 
 	double * P_Fx = new double[input.rows * input.cols];
 	double * P_Bx = new double[input.rows * input.cols];
@@ -145,6 +147,19 @@ int main(int argc, char**argv)
 	}
 	imshow("Display", grey);
 	waitKey(0);
-	
+
+	Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
+	Point center(dest.cols/2,dest.rows/2);
+	Mat normal_clone;
+	Mat mixed_clone;
+	     
+	seamlessClone(src, dest, grey, center, normal_clone, NORMAL_CLONE);
+	seamlessClone(src, dest, src_mask, center, mixed_clone, MIXED_CLONE);
+
+	namedWindow("Poisson", WINDOW_AUTOSIZE);
+	imshow("Poisson", normal_clone);
+	waitKey(0);
+
+
 	return 0;
 }
