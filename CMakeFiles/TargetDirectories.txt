@@ -1,5 +1,0 @@
-/home/sakura/Documents/CS174/graphicsMatte/CMakeFiles/figtree.dir
-/home/sakura/Documents/CS174/graphicsMatte/CMakeFiles/geodesics.dir
-/home/sakura/Documents/CS174/graphicsMatte/CMakeFiles/kcc.dir
-/home/sakura/Documents/CS174/graphicsMatte/CMakeFiles/kde.dir
-/home/sakura/Documents/CS174/graphicsMatte/CMakeFiles/matting.dir

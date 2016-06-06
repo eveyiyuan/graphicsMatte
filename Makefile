@@ -115,19 +115,6 @@ figtree/fast:
 .PHONY : figtree/fast
 
 #=============================================================================
-# Target rules for targets named geodesics
-
-# Build rule for target.
-geodesics: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 geodesics
-.PHONY : geodesics
-
-# fast build rule for target.
-geodesics/fast:
-	$(MAKE) -f CMakeFiles/geodesics.dir/build.make CMakeFiles/geodesics.dir/build
-.PHONY : geodesics/fast
-
-#=============================================================================
 # Target rules for targets named kcc
 
 # Build rule for target.
@@ -238,30 +225,6 @@ src/figtree.cpp.s:
 	$(MAKE) -f CMakeFiles/figtree.dir/build.make CMakeFiles/figtree.dir/src/figtree.cpp.s
 .PHONY : src/figtree.cpp.s
 
-src/geodesics.o: src/geodesics.cpp.o
-.PHONY : src/geodesics.o
-
-# target to build an object file
-src/geodesics.cpp.o:
-	$(MAKE) -f CMakeFiles/geodesics.dir/build.make CMakeFiles/geodesics.dir/src/geodesics.cpp.o
-.PHONY : src/geodesics.cpp.o
-
-src/geodesics.i: src/geodesics.cpp.i
-.PHONY : src/geodesics.i
-
-# target to preprocess a source file
-src/geodesics.cpp.i:
-	$(MAKE) -f CMakeFiles/geodesics.dir/build.make CMakeFiles/geodesics.dir/src/geodesics.cpp.i
-.PHONY : src/geodesics.cpp.i
-
-src/geodesics.s: src/geodesics.cpp.s
-.PHONY : src/geodesics.s
-
-# target to generate assembly for a file
-src/geodesics.cpp.s:
-	$(MAKE) -f CMakeFiles/geodesics.dir/build.make CMakeFiles/geodesics.dir/src/geodesics.cpp.s
-.PHONY : src/geodesics.cpp.s
-
 src/kde.o: src/kde.cpp.o
 .PHONY : src/kde.o
 
@@ -294,7 +257,6 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... figtree"
-	@echo "... geodesics"
 	@echo "... kcc"
 	@echo "... kde"
 	@echo "... matting"
@@ -308,9 +270,6 @@ help:
 	@echo "... src/figtree.o"
 	@echo "... src/figtree.i"
 	@echo "... src/figtree.s"
-	@echo "... src/geodesics.o"
-	@echo "... src/geodesics.i"
-	@echo "... src/geodesics.s"
 	@echo "... src/kde.o"
 	@echo "... src/kde.i"
 	@echo "... src/kde.s"

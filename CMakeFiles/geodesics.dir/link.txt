@@ -1,2 +1,0 @@
-/usr/bin/ar cr libgeodesics.a  CMakeFiles/geodesics.dir/src/geodesics.cpp.o
-/usr/bin/ranlib libgeodesics.a

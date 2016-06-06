@@ -1,2 +1,0 @@
-/usr/bin/ar cr libkcc.a  CMakeFiles/kcc.dir/src/KCenterClustering.cpp.o
-/usr/bin/ranlib libkcc.a
