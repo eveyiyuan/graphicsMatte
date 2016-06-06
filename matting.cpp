@@ -99,7 +99,6 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata) {
 
 int main(int argc, char**argv)
 {
-	float thresh = atof(argv[2]);
 	Mat input = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	Mat grey = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
 
