@@ -21,4 +21,4 @@ vector<double> Dijkstra(double * P_f, int R, int C, Point s);
 // (either the foreground or the background scribble).
 double getDistance(double * P_f, int R, int C, vector<Point> scribble, Point x);
 
-#endif _GEODESIC_H_
+#endif //_GEODESIC_H_

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project( matting )
+set(CMAKE_CXX_FLAGS -std=c++11)
 add_library(kde src/kde.cpp include/kde.h)
 add_library(geodesics src/geodesics.cpp include/geodesics.h)
 add_library(figtree src/figtree.cpp include/figtree.h include/figtree_internal.h)
