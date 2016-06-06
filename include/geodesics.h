@@ -8,14 +8,14 @@ using namespace std;
 using namespace cv;
 
 // Helper function to transform to 1D indices.
-int getIndex(int R, int C, Point p);
+int getIndex(int R, int C, Point * p);
 
 // Gets the edge weight in our discretization.
-double getWeight(double * P_f, int R, int C, Point s, Point t);
+double getWeight(double * P_f, int R, int C, Point * s, Point * t);
 
 // Run's Dijkstra's single-source shortest path algorithm in our 4-stencil
 // discretization of our image from source s.
-vector<double> Dijkstra(double * P_f, int R, int C, Point s);
+vector<double> Dijkstra(double * P_f, int R, int C, Point * s);
 
 // Calculates the actual geodesic distance from a given pixel x to a scribble
 // (either the foreground or the background scribble).
