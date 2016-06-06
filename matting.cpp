@@ -127,7 +127,6 @@ int main(int argc, char**argv)
 	Mat input2 = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 
 	Mat dest = imread(argv[2]);
-	Mat src = imread(argv[1]);
 
 
 	
@@ -198,19 +197,19 @@ int main(int argc, char**argv)
 	cout << "dimX " << dimX << endl;
 
 	Size size(dimX, dimY);
-	Mat src2;
-	Mat grey2;
-	resize(input, src2, size);
-	resize(grey, grey2, size);
+	Mat src;
+	Mat src_mask;
+	resize(input, src, size);
+	resize(grey, src_mask, size);
 
 
-	Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
+	//Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
 	
 	Mat normal_clone;
 	Mat mixed_clone;
 	     
-	seamlessClone(src2, dest, grey2, center, normal_clone, NORMAL_CLONE);
-	seamlessClone(src2, dest, grey2, center, mixed_clone, MIXED_CLONE);
+	seamlessClone(src, dest, src_mask, center, normal_clone, NORMAL_CLONE);
+	seamlessClone(src, dest, src_mask, center, mixed_clone, MIXED_CLONE);
 
 	imshow("Display", normal_clone);
 	waitKey(0);
