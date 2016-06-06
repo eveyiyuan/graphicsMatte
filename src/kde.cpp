@@ -17,8 +17,8 @@ void calcKDE(const vector<double>& xs, const vector<double>& ys,
 	}
 	const int d = 1;
 	const int N = xs.size();
-	// const double h = sqrt(2) * pow(xs.size(), -1.0/5.0);
-	const double h = 0.1;
+	const double h = sqrt(2) * pow(xs.size(), -1.0/5.0);
+	//const double h = 0.1;
 
 	figtree(d, N, M, W, const_cast<double*>(norm_x.data()), h,
 		    const_cast<double*>(weights.data()), const_cast<double*>(ys.data()),

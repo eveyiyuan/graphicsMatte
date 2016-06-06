@@ -100,13 +100,34 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata) {
 		drawFore = false;
 	}
 }
+static vector<Point> target;
+static bool targetDraw = false;
+void CallBackFunc2(int event, int x, int y, int flags, void* userdata) {
+	Point * p = (Point*) userdata;
+	if (event == EVENT_LBUTTONDOWN) {
+		targetDraw = true;
+	}
+	else if (event == EVENT_RBUTTONDOWN) {
+		*p = Point(x,y);
+		cout << "Point " << x << ", " << y << endl;
+	}
+	else if (event == EVENT_MOUSEMOVE) {
+		if (targetDraw) {
+			target.push_back(Point(x,y));
+		}
+	}
+	else if (event == EVENT_LBUTTONUP) {
+		targetDraw = false;
+	}
 
-
+}
 int main(int argc, char**argv)
 {
 	Mat input = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	Mat grey = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
 	Mat input2 = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+
+	Mat dest = imread(argv[2]);
 
 
 	
@@ -122,8 +143,8 @@ int main(int argc, char**argv)
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
 
-	generateProbs(fore_probs, input, fore_data, 0.001);
-	generateProbs(bg_probs, input, bg_data, 0.001);
+	generateProbs(fore_probs, input, fore_data, 0.01);
+	generateProbs(bg_probs, input, bg_data, 0.01);
 
 	double * P_Fx = new double[input.rows * input.cols];
 	double * P_Bx = new double[input.rows * input.cols];
@@ -160,6 +181,54 @@ int main(int argc, char**argv)
 	}
 	imshow("Display", grey);
 	waitKey(0);
+	Point center(dest.cols/2,dest.rows/2);
+	setMouseCallback("Display", CallBackFunc2, &center);
+	imshow("Display", dest);
+	waitKey(0);
+	int maxX = target[0].x;
+	int minX = target[0].x;
+	int maxY = target[0].y;
+	int minY = target[0].y;
+
+	for(unsigned int i = 0; i < target.size(); i++) {
+		if (target[i].x > maxX) {
+			maxX = target[i].x;
+		}
+		else if (target[i].x < minX) {
+			minX = target[i].x;
+		}
+		else if (target[i].y > maxY) {
+			maxY = target[i].y;
+		}
+		else if(target[i].y < minY) {
+			minY = target[i].y;
+		}
+	}
+
+	int dimY = maxY - minY;
+	int dimX = maxX - minX;
+
+	cout << "dimY " << dimY << endl;
+	cout << "dimX " << dimX << endl;
+
+	Size size(dimX, dimY);
+	Mat src;
+	Mat src_mask;
+	resize(input, src, size);
+	resize(grey, src_mask, size);
+
+
+	//Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
 	
+	Mat normal_clone;
+	Mat mixed_clone;
+	     
+	seamlessClone(src, dest, src_mask, center, normal_clone, NORMAL_CLONE);
+	seamlessClone(src, dest, src_mask, center, mixed_clone, MIXED_CLONE);
+
+	imshow("Display", normal_clone);
+	waitKey(0);
+
+
 	return 0;
 }
