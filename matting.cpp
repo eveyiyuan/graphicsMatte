@@ -118,20 +118,23 @@ int main(int argc, char**argv)
 	cout << "size of fore " << fore.size() << endl;
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
-	generateProbs(fore_probs, input, fore_data, 0.0001);
-	generateProbs(bg_probs, input, bg_data, 0.0001);
+	generateProbs(fore_probs, input, fore_data, 0.00001);
+	generateProbs(bg_probs, input, bg_data, 0.00001);
 	double * P_Fx = new double[input.rows * input.cols];
 	double * P_Bx = new double[input.rows * input.cols];
-	bgforeProb(fore_probs, bg_probs, input.rows, input.cols, P_Fx, false);
-	bgforeProb(fore_probs, bg_probs, input.rows, input.cols, P_Bx, true);
+	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Fx, false);
+	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Bx, true);
 
 	for(unsigned int r = 0; r < input.rows; r++) {
 		for(unsigned int c = 0; c < input.cols; c++) {
 			if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
 				grey.at<uchar>(r, c) = 255;
 			}
-			else {
+			else if (P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]){
 				grey.at<uchar>(r, c) = 0;
+			}
+			else {
+				grey.at<uchar>(r, c) = 255/2;
 			}
 		}
 	}

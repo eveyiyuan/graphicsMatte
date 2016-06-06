@@ -27,7 +27,7 @@ void calcKDE(const vector<double>& xs, const vector<double>& ys,
 void bgforeProb(const double* p_fore, const double* p_bg, int W, int H, double* prob, bool bg) {
 	for(int i = 0; i < W*H; i++) {
 		if(p_fore[i] == 0 && p_bg[i] == 0) {
-			prob[i] = 1;
+			prob[i] = 0;
 		}
 		else {
 			if (bg) {
