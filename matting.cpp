@@ -130,7 +130,7 @@ int main(int argc, char**argv)
 			if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
 				grey.at<uchar>(r, c) = 255;
 			}
-			else if (P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]){
+			else if (P_Fx[input.cols*r + c] < P_Bx[input.cols*r + c]){
 				grey.at<uchar>(r, c) = 0;
 			}
 			else {
