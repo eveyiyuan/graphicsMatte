@@ -55,36 +55,40 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata) {
 
 	if (event == EVENT_LBUTTONDOWN) {
 		cout << "Left button marking bg " << x << "," << y << endl;
-		bg_data[0].push_back((double)(*source).at<Vec3b>(y,x)[0]);
-		bg_data[1].push_back((double)(*source).at<Vec3b>(y,x)[1]);
-		bg_data[2].push_back((double)(*source).at<Vec3b>(y,x)[3]);
-		(*source).at<uchar>(y, x) = 0;
+		bg_data[0].push_back((double)(*source).at<Vec3b>(y,x).val[0]);
+		bg_data[1].push_back((double)(*source).at<Vec3b>(y,x).val[1]);
+		bg_data[2].push_back((double)(*source).at<Vec3b>(y,x).val[2]);
+		(*source).at<Vec3b>(y, x).val[0] = 0;
+		(*source).at<Vec3b>(y, x).val[1] = 0;
+		(*source).at<Vec3b>(y, x).val[2] = 0;
 		bg.push_back(Point(x,y));
 		drawBg = true;
 	}
 	else if (event == EVENT_RBUTTONDOWN) {
 		cout << "Right button marking fore" << x << "," << y << endl;
-		fore_data[0].push_back((double)(*source).at<Vec3b>(y,x)[0]);
-		fore_data[1].push_back((double)(*source).at<Vec3b>(y,x)[1]);
-		fore_data[2].push_back((double)(*source).at<Vec3b>(y,x)[3]);
-		(*source).at<uchar>(y, x) = 255;
+		fore_data[0].push_back((double)(*source).at<Vec3b>(y,x).val[0]);
+		fore_data[1].push_back((double)(*source).at<Vec3b>(y,x).val[1]);
+		fore_data[2].push_back((double)(*source).at<Vec3b>(y,x).val[2]);
+		(*source).at<Vec3b>(y, x).val[0] = 255;
+		(*source).at<Vec3b>(y, x).val[1] = 255;
+		(*source).at<Vec3b>(y, x).val[2] = 255;
 		fore.push_back(Point(x,y));
 		drawFore = true;
 	}
 	else if (event == EVENT_MOUSEMOVE) {
 		
 		if (drawBg == true) {
-			bg_data[0].push_back((double)(*source).at<Vec3b>(y,x)[0]);
-			bg_data[1].push_back((double)(*source).at<Vec3b>(y,x)[1]);
-			bg_data[2].push_back((double)(*source).at<Vec3b>(y,x)[3]);
-			circle(*source, Point(x,y), 5, 0, -1);
+			bg_data[0].push_back((double)(*source).at<Vec3b>(y,x).val[0]);
+			bg_data[1].push_back((double)(*source).at<Vec3b>(y,x).val[1]);
+			bg_data[2].push_back((double)(*source).at<Vec3b>(y,x).val[2]);
+			circle(*source, Point(x,y), 5, Scalar(0,0,0), -1);
 			bg.push_back(Point(x,y));
 		}
 		else if (drawFore == true) {
-			fore_data[0].push_back((double)(*source).at<Vec3b>(y,x)[0]);
-			fore_data[1].push_back((double)(*source).at<Vec3b>(y,x)[1]);
-			fore_data[2].push_back((double)(*source).at<Vec3b>(y,x)[3]);
-			circle(*source, Point(x,y), 5, 255, -1);
+			fore_data[0].push_back((double)(*source).at<Vec3b>(y,x).val[0]);
+			fore_data[1].push_back((double)(*source).at<Vec3b>(y,x).val[1]);
+			fore_data[2].push_back((double)(*source).at<Vec3b>(y,x).val[2]);
+			circle(*source, Point(x,y), 5, Scalar(255,255,255), -1);
 			fore.push_back(Point(x,y));			
 		}
 	}
@@ -101,27 +105,28 @@ int main(int argc, char**argv)
 {
 	Mat input = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 	Mat grey = imread(argv[1], CV_LOAD_IMAGE_GRAYSCALE);
+	Mat input2 = imread(argv[1], CV_LOAD_IMAGE_COLOR);
 
 
 	
 	namedWindow("Display", WINDOW_AUTOSIZE);
-	setMouseCallback("Display", CallBackFunc, &grey);
+	setMouseCallback("Display", CallBackFunc, &input2);
 	while (1) {
-		imshow("Display", grey);
+		imshow("Display", input2);
 		if(waitKey(1) != -1) {
 			break;
 		}
 	}
-	// simpleMatte(Vec3b(200,240,0), input, grey, thresh);
-	// imshow("Display", grey);
-	// waitKey(0);
-	cout << "size of fore " << fore.size() << endl;
+
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
-	generateProbs(fore_probs, input, fore_data, 0.00001);
-	generateProbs(bg_probs, input, bg_data, 0.00001);
+
+	generateProbs(fore_probs, input, fore_data, 0.001);
+	generateProbs(bg_probs, input, bg_data, 0.001);
+
 	double * P_Fx = new double[input.rows * input.cols];
 	double * P_Bx = new double[input.rows * input.cols];
+
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Fx, false);
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Bx, true);
 

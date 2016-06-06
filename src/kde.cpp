@@ -17,6 +17,7 @@ void calcKDE(const vector<double>& xs, const vector<double>& ys,
 	}
 	const int d = 1;
 	const int N = xs.size();
+	// const double h = sqrt(2) * pow(xs.size(), -1.0/5.0);
 	const double h = 0.1;
 
 	figtree(d, N, M, W, const_cast<double*>(norm_x.data()), h,
@@ -67,9 +68,9 @@ void generateProbs(double* probs, Mat input, const vector< vector<double> > xs, 
 	
 	for(int r = 0; r < input.rows; r++) {
 		for (int c = 0; c < input.cols; c++) {
-			probs[input.cols*r + c] = pdfs[0][input.at<Vec3b>(r, c)[0]]*
-									  pdfs[1][input.at<Vec3b>(r, c)[1]]*
-									  pdfs[2][input.at<Vec3b>(r, c)[2]];
+			probs[input.cols*r + c] = pdfs[0][input.at<Vec3b>(r, c).val[0]]*
+									  pdfs[1][input.at<Vec3b>(r, c).val[1]]*
+									  pdfs[2][input.at<Vec3b>(r, c).val[2]];
 		}
 	}
 }
