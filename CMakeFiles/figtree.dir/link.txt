@@ -1,0 +1,2 @@
+/usr/bin/ar cr libfigtree.a  CMakeFiles/figtree.dir/src/figtree.cpp.o
+/usr/bin/ranlib libfigtree.a

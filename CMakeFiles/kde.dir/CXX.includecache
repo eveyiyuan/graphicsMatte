@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sakura/Documents/CS174/graphicsMatte/src/kde.cpp
+kde.h
+/home/sakura/Documents/CS174/graphicsMatte/src/kde.h
+cstdio
+-
+string
+-
+cmath
+-
+algorithm
+-
+
+include/figtree.h
+
+include/kde.h
+figtree.h
+include/figtree.h
+vector
+-
+opencv2/opencv.hpp
+-
+

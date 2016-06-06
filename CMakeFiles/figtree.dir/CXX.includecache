@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sakura/Documents/CS174/graphicsMatte/src/figtree.cpp
+figtree.h
+/home/sakura/Documents/CS174/graphicsMatte/src/figtree.h
+figtree_internal.h
+/home/sakura/Documents/CS174/graphicsMatte/src/figtree_internal.h
+stddef.h
+-
+math.h
+-
+stdio.h
+-
+string.h
+-
+algorithm
+-
+functional
+-
+KCenterClustering.h
+/home/sakura/Documents/CS174/graphicsMatte/src/KCenterClustering.h
+ANN/ANN.h
+/home/sakura/Documents/CS174/graphicsMatte/src/ANN/ANN.h
+limits.h
+-
+float.h
+-
+mex.h
+/home/sakura/Documents/CS174/graphicsMatte/src/mex.h
+
+include/KCenterClustering.h
+
+include/figtree.h
+
+include/figtree_internal.h
+figtree.h
+include/figtree.h
+

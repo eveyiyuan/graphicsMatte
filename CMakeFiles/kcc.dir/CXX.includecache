@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sakura/Documents/CS174/graphicsMatte/src/KCenterClustering.cpp
+KCenterClustering.h
+/home/sakura/Documents/CS174/graphicsMatte/src/KCenterClustering.h
+math.h
+-
+time.h
+-
+stdlib.h
+-
+string.h
+-
+
+include/KCenterClustering.h
+

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sakura/Documents/CS174/graphicsMatte/src/geodesics.cpp
+cstdio
+-
+algorithm
+-
+queue
+-
+limits
+-
+vector
+-
+unordered_map
+-
+utility
+-
+

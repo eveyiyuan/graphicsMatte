@@ -1,0 +1,2 @@
+/usr/bin/ar cr libkde.a  CMakeFiles/kde.dir/src/kde.cpp.o
+/usr/bin/ranlib libkde.a
