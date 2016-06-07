@@ -4,6 +4,7 @@
 
 #include "geodesics.h"
 #include <cstdio>
+#include <cmath>
 #include <algorithm>
 #include <queue>
 #include <limits>
@@ -25,7 +26,7 @@ double getWeight(double * P_f, int R, int C, Point * s, Point * t)
 {
 	int s_idx = getIndex(R, C, s);
 	int t_idx = getIndex(R, C, t);
-	return abs(P_f[s_idx] - P_f[t_idx]);
+	return fabs(P_f[s_idx] - P_f[t_idx]);
 }
 
 // For the 4-stencil discretization suggested in Bai and Sapiro 2008, and using
@@ -35,7 +36,7 @@ double getWeight(double * P_f, int R, int C, Point * s, Point * t)
 // -source shortest paths from the source s.
 double Dijkstra(double * P_f, int R, int C, Point * s, Point * t)
 {
-	cerr << "Started running Dijkstra with souce (" << s->x << " , " << s->y << ")" << endl;
+	//cerr << "Started running Dijkstra with souce (" << s->x << " , " << s->y << ")" << endl;
 	// First, create our priority queue for use in Dijkstra's algorithm.
 	typedef pair<Point, double> QueueElem;
 	// The third coordinate serves as our value; so for convenience we will
@@ -84,6 +85,7 @@ double Dijkstra(double * P_f, int R, int C, Point * s, Point * t)
 		// If we are at the target, we can stop early.
 		if ((u->x == t->x) && (u->y == t->y))
 		{
+			delete u;
 			return dist[getIndex(R, C, t)];
 		} 
 		// EXTRACT-MIN frrom Q.
@@ -120,7 +122,7 @@ double Dijkstra(double * P_f, int R, int C, Point * s, Point * t)
 		delete u;
 	}
 
-	cerr << "Dijkstra's finished running!" << endl;
+	//cerr << "Dijkstra's finished running!" << endl;
 
 	return dist[getIndex(R, C, t)];
 }
