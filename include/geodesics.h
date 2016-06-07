@@ -15,7 +15,7 @@ double getWeight(double * P_f, int R, int C, Point * s, Point * t);
 
 // Run's Dijkstra's single-source shortest path algorithm in our 4-stencil
 // discretization of our image from source s.
-vector<double> Dijkstra(double * P_f, int R, int C, Point * s);
+double Dijkstra(double * P_f, int R, int C, Point * s, Point * t);
 
 // Calculates the actual geodesic distance from a given pixel x to a scribble
 // (either the foreground or the background scribble).
