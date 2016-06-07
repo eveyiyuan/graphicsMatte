@@ -35,7 +35,7 @@ double getWeight(double * P_f, int R, int C, Point * s, Point * t)
 // -source shortest paths from the source s.
 vector<double> Dijkstra(double * P_f, int R, int C, Point * s)
 {
-	cerr << "Started running Dijkstra with souce (" << s->x << " , " << s->y << ")" << endl;
+	//cerr << "Started running Dijkstra with souce (" << s->x << " , " << s->y << ")" << endl;
 	// First, create our priority queue for use in Dijkstra's algorithm.
 	typedef pair<Point, double> QueueElem;
 	// The third coordinate serves as our value; so for convenience we will
@@ -65,7 +65,6 @@ vector<double> Dijkstra(double * P_f, int R, int C, Point * s)
 			Q.push(make_pair(p, dist[getIndex(R, C, &p)]));
 		}
 	}
-
 	// Now for the main loop of Dijkstra's algorithm. While the queue is not
 	// empty, we EXTRACT-MIN from the [min-]priority queue and then explore
 	// the [at most] four neighbors p' of the Point p. We then look at the
@@ -110,8 +109,6 @@ vector<double> Dijkstra(double * P_f, int R, int C, Point * s)
 		}
 	}
 
-	cerr << "Dijkstra's finished running!" << endl;
-
 	return dist;
 }
 
@@ -137,3 +134,4 @@ double getDistance(double * P_f, int R, int C, vector<Point> scribble, Point x)
 	}
 	return min_dist;
 }
+

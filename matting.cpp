@@ -143,8 +143,8 @@ int main(int argc, char**argv)
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
 
-	generateProbs(fore_probs, input, fore_data, 0.01);
-	generateProbs(bg_probs, input, bg_data, 0.01);
+	generateProbs(fore_probs, input, fore_data, 0.1);
+	generateProbs(bg_probs, input, bg_data, 0.1);
 
 	double * P_Fx = new double[input.rows * input.cols];
 	double * P_Bx = new double[input.rows * input.cols];
@@ -154,7 +154,7 @@ int main(int argc, char**argv)
 
 	for(unsigned int r = 0; r < input.rows; r++) {
 		for(unsigned int c = 0; c < input.cols; c++) {
-			/*if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
+			if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
 				grey.at<uchar>(r, c) = 255;
 			}
 			else if (P_Fx[input.cols*r + c] < P_Bx[input.cols*r + c]){
@@ -162,25 +162,27 @@ int main(int argc, char**argv)
 			}
 			else {
 				grey.at<uchar>(r, c) = 255/2;
-			}*/
-			Point p;
-			p.x = r;
-			p.y = c;
-			double D_f = getDistance(P_Fx, input.rows, input.cols, fore, p);
-			double D_b = getDistance(P_Bx, input.rows, input.cols, bg, p);
-			if (D_f > D_b)
-			{
-				grey.at<uchar>(r, c) = 255;
 			}
-			else
-			{
-				grey.at<uchar>(r, c) = 0;
-			}
-			cerr << "Processed pixel ( " << r << ", " << c << ")" << endl;
+			// Point p;
+			// p.x = r;
+			// p.y = c;
+			// double D_f = getDistance(P_Fx, input.rows, input.cols, fore, p);
+			// double D_b = getDistance(P_Bx, input.rows, input.cols, bg, p);
+			// if (D_f < D_b)
+			// {
+			// 	grey.at<uchar>(r, c) = 255;
+			// }
+			// else
+			// {
+			// 	grey.at<uchar>(r, c) = 0;
+			// }
+			
 		}
+		cerr << "Processed row " << r << endl;
 	}
 	imshow("Display", grey);
 	waitKey(0);
+
 	Point center(dest.cols/2,dest.rows/2);
 	setMouseCallback("Display", CallBackFunc2, &center);
 	imshow("Display", dest);
