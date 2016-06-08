@@ -140,6 +140,7 @@ int main(int argc, char**argv)
 		}
 	}
 
+	//Calculate probability of being in fore and background
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
 
@@ -152,9 +153,7 @@ int main(int argc, char**argv)
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Fx, false);
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Bx, true);
 
-	cerr << "Fore scribble's size is " << fore.size() << endl;
-	cerr << "Bg scribble's size is " << bg.size() << endl;
-
+	// Get geodesic distance
 	vector<double> fdist = getDists(P_Fx, input.rows, input.cols, fore);
 
 	vector<double> bdist = getDists(P_Bx, input.rows, input.cols, bg);
@@ -179,10 +178,14 @@ int main(int argc, char**argv)
 	}
 	imshow("Display", grey);
 	waitKey(0);
+
+	// Poisson Image Blending Section
 	Point center(dest.cols/2,dest.rows/2);
 	setMouseCallback("Display", CallBackFunc2, &center);
 	imshow("Display", dest);
 	waitKey(0);
+
+	// Get size boundaries for foreground image
 	int maxX = target[0].x;
 	int minX = target[0].x;
 	int maxY = target[0].y;
@@ -214,9 +217,6 @@ int main(int argc, char**argv)
 	Mat src_mask;
 	resize(input, src, size);
 	resize(grey, src_mask, size);
-
-
-	//Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
 	
 	Mat normal_clone;
 	Mat mixed_clone;
