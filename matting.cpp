@@ -155,12 +155,22 @@ int main(int argc, char**argv)
 	// double * fdist = test(P_Fx, input.rows, input.cols, fore);
 	// double * bdist = test(P_Bx, input.rows, input.cols, bg);
 
+	cerr << "Fore scribble's size is " << fore.size() << endl;
+	cerr << "Bg scribble's size is " << bg.size() << endl;
+
 	vector<double> fdist = getDists(P_Fx, input.rows, input.cols, fore);
 	cerr << endl;
 	cerr << "Finished fdist!" << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
 	vector<double> bdist = getDists(P_Bx, input.rows, input.cols, bg);
 	cerr << endl;
 	cerr << "Finished bdist!" << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
 	cerr << endl;
 
 	for(unsigned int r = 0; r < input.rows; r++) {
@@ -181,17 +191,17 @@ int main(int argc, char**argv)
 			// double D_b = getDistanceR(P_Bx, input.rows, input.cols, bg, p);
 			double D_f = fdist[r * input.cols + c];
 			double D_b = bdist[r * input.cols + c];
-			cerr << "D_f is " << D_f << endl;
-			cerr << "D_b is " << D_b << endl;
+			//cerr << "D_f is " << D_f << endl;
+			//cerr << "D_b is " << D_b << endl;
 			if (D_f < D_b)
 			{
 				grey.at<uchar>(r, c) = 255;
-				cerr << "Pixel (" << r << ", " << c << ")" << "is in the foreground." << endl;
+				//cerr << "Pixel (" << r << ", " << c << ")" << "is in the foreground." << endl;
 			}
 			else
 			{
 				grey.at<uchar>(r, c) = 0;
-				cerr << "Pixel (" << r << ", " << c << ")" << "is in the background." << endl;
+				//cerr << "Pixel (" << r << ", " << c << ")" << "is in the background." << endl;
 			}
 			//cerr << "Processed pixel (" << r << ", " << c << ")" << endl;
 		}

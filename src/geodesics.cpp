@@ -305,6 +305,7 @@ vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 	for (int i = 0; i < scribble.size(); i++)
 	{
 		// Set each source to be distance 0 - it is 0 distance away from itself, after all.
+		//cerr << "Adding source!" << endl;
 		dist[scribble[i].x * C + scribble[i].y] = 0.0;
 		Q.push(make_pair(scribble[i], 0.0));
 	}
@@ -315,8 +316,11 @@ vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 	// distances of its neighbors by relaxing each edge and calling
 	// DECREASE-KEY if we need to make an update.
 
+	//cerr << "There are " << Q.size() << " elements in the queue" << endl;
+
 	while(!Q.empty())
 	{
+		//err << "Starting main loop!" << endl;
 		// Get the point at the top of the queue.
 		Point u = Q.top().first;
 		// Now pop the QueueElem.
@@ -333,13 +337,14 @@ vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 			// Do bounds checking.
 			if ((0 <= v.x && v.x < R) && (0 <= v.y && v.y < C))
 			{
+				//cerr << "Blah!" << endl;
 				// Calculate our distance in our discretization.
-				double w = fabs(P_f[u.x * C + u.y] - P_f[v.x * C + u.y]);
-				cerr << "The weight is " << w << endl;
+				double w = fabs(P_f[u.x * C + u.y] - P_f[v.x * C + v.y]);
+				//cerr << "The weight is " << w << endl;
 				// Relax our edge.
 				if (dist[u.x * C + u.y] + w < dist[v.x * C + v.y])
 				{
-					cerr << "Updated!" << endl;
+					//cerr << "Updated!" << endl;
 					dist[v.x * C + v.y] = dist[u.x * C + u.y] + w;
 					// Since the <queue> library does not have a DECREASE-KEY
 					// function, add a duplicate instead.
