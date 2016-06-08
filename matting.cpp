@@ -153,6 +153,7 @@ int main(int argc, char**argv)
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Bx, true);
 
 	for(unsigned int r = 0; r < input.rows; r++) {
+		cerr << "Processed row " << r  << endl;
 		for(unsigned int c = 0; c < input.cols; c++) {
 			/*if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
 				grey.at<uchar>(r, c) = 255;
@@ -176,8 +177,9 @@ int main(int argc, char**argv)
 			{
 				grey.at<uchar>(r, c) = 0;
 			}
-			cerr << "Processed pixel ( " << r << ", " << c << ")" << endl;
+			//cerr << "Processed pixel ( " << r << ", " << c << ")" << endl;
 		}
+		
 	}
 	imshow("Display", grey);
 	waitKey(0);
