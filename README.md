@@ -11,7 +11,7 @@ KCenterClustering.cpp
 
 # Instructions:
 * to make: make
-* to run: ./matting /<path to image to matte/> /<path to new background image/>
+* to run: ./matting (path to image to matte) (path to new background image)
 * interactive:
 	1. When your first image appears, hold down the right mouse button to draw white scribbles to denote the foreground
 	2. Then, hold down the left mouse button to draw black scribbles to denote the background
