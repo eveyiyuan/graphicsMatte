@@ -143,8 +143,8 @@ int main(int argc, char**argv)
 	double * fore_probs = new double[input.rows * input.cols];
 	double * bg_probs = new double[input.rows * input.cols];
 
-	generateProbs(fore_probs, input, fore_data, 0.1);
-	generateProbs(bg_probs, input, bg_data, 0.1);
+	generateProbs(fore_probs, input, fore_data, 0.01);
+	generateProbs(bg_probs, input, bg_data, 0.01);
 
 	double * P_Fx = new double[input.rows * input.cols];
 	double * P_Bx = new double[input.rows * input.cols];
@@ -152,74 +152,112 @@ int main(int argc, char**argv)
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Fx, false);
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Bx, true);
 
+	// double * fdist = test(P_Fx, input.rows, input.cols, fore);
+	// double * bdist = test(P_Bx, input.rows, input.cols, bg);
+
+	cerr << "Fore scribble's size is " << fore.size() << endl;
+	cerr << "Bg scribble's size is " << bg.size() << endl;
 
 	vector<double> fdist = getDists(P_Fx, input.rows, input.cols, fore);
-
+	cerr << endl;
+	cerr << "Finished fdist!" << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
 	vector<double> bdist = getDists(P_Bx, input.rows, input.cols, bg);
-
+	cerr << endl;
+	cerr << "Finished bdist!" << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
+	cerr << endl;
 
 	for(unsigned int r = 0; r < input.rows; r++) {
+		//cerr << "Processed row " << r  << endl;
 		for(unsigned int c = 0; c < input.cols; c++) {
-			double D_f = fdist[r * input.cols + c];
-			double D_b = bdist[r * input.cols + c];
-			if (D_f < D_b) {
+			/*if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
 				grey.at<uchar>(r, c) = 255;
 			}
-			else {
+			else if (P_Fx[input.cols*r + c] < P_Bx[input.cols*r + c]){
 				grey.at<uchar>(r, c) = 0;
 			}
+			else {
+				grey.at<uchar>(r, c) = 255/2;
+			}*/
+			// Point p;
+			// p.x = r;
+			// p.y = c;
+			// double D_f = getDistanceR(P_Fx, input.rows, input.cols, fore, p);
+			// double D_b = getDistanceR(P_Bx, input.rows, input.cols, bg, p);
+			double D_f = fdist[r * input.cols + c];
+			double D_b = bdist[r * input.cols + c];
+			//cerr << "D_f is " << D_f << endl;
+			//cerr << "D_b is " << D_b << endl;
+			if (D_f < D_b)
+			{
+				grey.at<uchar>(r, c) = 255;
+				//cerr << "Pixel (" << r << ", " << c << ")" << "is in the foreground." << endl;
+			}
+			else
+			{
+				grey.at<uchar>(r, c) = 0;
+				//cerr << "Pixel (" << r << ", " << c << ")" << "is in the background." << endl;
+			}
+
+			//cerr << "Processed pixel (" << r << ", " << c << ")" << endl;
 		}
+		
 	}
 	imshow("Display", grey);
 	waitKey(0);
+	// Point center(dest.cols/2,dest.rows/2);
+	// setMouseCallback("Display", CallBackFunc2, &center);
+	// imshow("Display", dest);
+	// waitKey(0);
+	// int maxX = target[0].x;
+	// int minX = target[0].x;
+	// int maxY = target[0].y;
+	// int minY = target[0].y;
 
-	Point center(dest.cols/2,dest.rows/2);
-	setMouseCallback("Display", CallBackFunc2, &center);
-	imshow("Display", dest);
-	waitKey(0);
-	int maxX = target[0].x;
-	int minX = target[0].x;
-	int maxY = target[0].y;
-	int minY = target[0].y;
+	// for(unsigned int i = 0; i < target.size(); i++) {
+	// 	if (target[i].x > maxX) {
+	// 		maxX = target[i].x;
+	// 	}
+	// 	else if (target[i].x < minX) {
+	// 		minX = target[i].x;
+	// 	}
+	// 	else if (target[i].y > maxY) {
+	// 		maxY = target[i].y;
+	// 	}
+	// 	else if(target[i].y < minY) {
+	// 		minY = target[i].y;
+	// 	}
+	// }
 
-	for(unsigned int i = 0; i < target.size(); i++) {
-		if (target[i].x > maxX) {
-			maxX = target[i].x;
-		}
-		else if (target[i].x < minX) {
-			minX = target[i].x;
-		}
-		else if (target[i].y > maxY) {
-			maxY = target[i].y;
-		}
-		else if(target[i].y < minY) {
-			minY = target[i].y;
-		}
-	}
+	// int dimY = maxY - minY;
+	// int dimX = maxX - minX;
 
-	int dimY = maxY - minY;
-	int dimX = maxX - minX;
+	// cout << "dimY " << dimY << endl;
+	// cout << "dimX " << dimX << endl;
 
-	cout << "dimY " << dimY << endl;
-	cout << "dimX " << dimX << endl;
-
-	Size size(dimX, dimY);
-	Mat src;
-	Mat src_mask;
-	resize(input, src, size);
-	resize(grey, src_mask, size);
+	// Size size(dimX, dimY);
+	// Mat src;
+	// Mat src_mask;
+	// resize(input, src, size);
+	// resize(grey, src_mask, size);
 
 
-	//Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
+	// //Mat src_mask = 255 * Mat::ones(src.rows, src.cols, src.depth());
 	
-	Mat normal_clone;
-	Mat mixed_clone;
+	// Mat normal_clone;
+	// Mat mixed_clone;
 	     
-	seamlessClone(src, dest, src_mask, center, normal_clone, NORMAL_CLONE);
-	seamlessClone(src, dest, src_mask, center, mixed_clone, MIXED_CLONE);
+	// seamlessClone(src, dest, src_mask, center, normal_clone, NORMAL_CLONE);
+	// seamlessClone(src, dest, src_mask, center, mixed_clone, MIXED_CLONE);
 
-	imshow("Display", normal_clone);
-	waitKey(0);
+	// imshow("Display", normal_clone);
+	// waitKey(0);
 
 
 	return 0;
