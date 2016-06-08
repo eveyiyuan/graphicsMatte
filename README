@@ -1,1 +1,10 @@
 This project implements a automatic 2D image matte
+
+This project relies on the OpenCV library and the Figtree Library
+(vmorariu/figtree)
+
+In the include folder, please include Figtree's figtree.h,
+figtree_internal.h, and KCenterClustering.h
+
+In the src folder, please include Figtree's figtree.cpp and
+KCenterClustering.cpp
