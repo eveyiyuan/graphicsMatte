@@ -13,6 +13,7 @@
 #include <utility>
 
 
+
 vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 {
 	// First, create our priority queue for use in Dijkstra's algorithm.
