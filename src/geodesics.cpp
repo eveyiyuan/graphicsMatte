@@ -162,123 +162,7 @@ double DijkstraR(double * P_f, int R, int C, Point * s, Point * t)
 			p.x = i;
 			p.y = j;
 			Q.push(make_pair(p, dist[getIndex(R, C, &p)]));
-		}
-	}*/
-	Q.push(make_pair(*s, 0.0));
 
-	// Now for the main loop of Dijkstra's algorithm. While the queue is not
-	// empty, we EXTRACT-MIN from the [min-]priority queue and then explore
-	// the [at most] four neighbors p' of the Point p. We then look at the
-	// distance estimate
-	// dist[p] + weight(p, p')
-	// If this distance is smaller than the current distance to p', we update
-	// the distance array. We then push the updated
-	while (!Q.empty())
-	{
-		// Get the Point at the top of the queue.
-		Point temp = Q.top().first;
-		Point * u = new Point;
-		u->x = temp.x;
-		u->y = temp.y;
-		// If we are at the target, we can stop early.
-		if ((u->x == t->x) && (u->y == t->y))
-		{
-			delete u;
-			return dist[t->x * C + t->y];
-		} 
-		// EXTRACT-MIN frrom Q.
-		Q.pop();
-		//cerr << "This point has x coordinate " << u.x << " and y coordinate " << u.y << endl;
-		// Find the adjacent Points to this Point.
-		const int dx[4] = {-1, 0, 1, 0};
-		const int dy[4] = {0, -1, 0, 1};
-		for (int i = 0; i < 4; i++)
-		{
-			Point * v = new Point;
-			v->x = u->x + dx[i];
-			v->y = u->y + dy[i];
-			//cerr << "This point has x coordinate " << v->x << " and y coordinate " << v->y << endl;
-			// Check to see if each neighbor is valid.
-			if ((0 <= v->x && v->x < R) && (0 <= v->y && v->y < C))
-			{
-				//cerr << "Relax the edge." << endl;
-				// Relax with respect to the edge (u, v).
-				double w = fabs(P_f[u->x * C + u->y] - P_f[v->x * C + u->y]);
-				double new_dist = dist[u->x * C + u->y] + w;
-				if (new_dist < dist[v->x * C + v->y])
-				{
-					dist[v->x * C + v->y] = new_dist;
-					// The <queue> library doesn't have a DECREASE-KEY
-					// function, so we just add another QueueElem with the same
-					// value but decreased key.
-					//cerr << "About to Push!" << endl;
-					Q.push(make_pair(*v, new_dist));
-					//cerr << "Pushed!" << endl;
-				}
-			}
-			delete v;
-		}
-		delete u;
-	}
-
-	//cerr << "Dijkstra's finished running!" << endl;
-
-	return dist[t->x * C + t->y];
-}
-
-// Actually calculates the geodesic distance from a scribble to a given Point
-// x. This is just the minimum over all points in the scribble 
-double getDistance(double * P_f, int R, int C, vector<Point> scribble, Point x)
-{
-	// Run Dijkstra's algorithm with Point x as the source. For each Point in
-	// the scribble, get the distance.
-	//vector<double> dists = Dijkstra(P_f, R, C, &x);
-	vector<double> sdists;
-	for (int i = 0; i < scribble.size(); i++)
-	{
-		Point * temp = new Point;
-		temp->x = scribble[i].x;
-		temp->y = scribble[i].y;
-		double dist = Dijkstra(P_f, R, C, temp, &x);
-		sdists.push_back(dist);
-		delete temp;
-	}
-	double min_dist = numeric_limits<double>::max();
-	for (int i = 0; i < sdists.size(); i++)
-	{
-		if (sdists[i] < min_dist)
-		{
-			min_dist = sdists[i];
-		}
-	}
-	return min_dist;
-}
-
-double getDistanceR(double * P_f, int R, int C, vector<Point> scribble, Point x)
-{
-	// Run Dijkstra's algorithm with Point x as the source. For each Point in
-	// the scribble, get the distance.
-	//vector<double> dists = Dijkstra(P_f, R, C, &x);
-	vector<double> sdists;
-	for (int i = 0; i < scribble.size(); i++)
-	{
-		Point * temp = new Point;
-		temp->x = scribble[i].x;
-		temp->y = scribble[i].y;
-		double dist = DijkstraR(P_f, R, C, temp, &x);
-		sdists.push_back(dist);
-		delete temp;
-	}
-	double min_dist = numeric_limits<double>::max();
-	for (int i = 0; i < sdists.size(); i++)
-	{
-		if (sdists[i] < min_dist)
-		{
-			min_dist = sdists[i];
-		}
-	}
-	return min_dist;
-}
 
 vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 {
@@ -316,7 +200,8 @@ vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 	// distances of its neighbors by relaxing each edge and calling
 	// DECREASE-KEY if we need to make an update.
 
-	//cerr << "There are " << Q.size() << " elements in the queue" << endl;
+	const int dx[4] = {-1, 0, 1, 0};
+	const int dy[4] = {0, -1, 0, 1};
 
 	while(!Q.empty())
 	{
@@ -326,8 +211,7 @@ vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble)
 		// Now pop the QueueElem.
 		Q.pop();
 		// Update all of this point's neighbors.
-		const int dx[4] = {-1, 0, 1, 0};
-		const int dy[4] = {0, -1, 0, 1};
+		
 		// Our graph is a 4-neighbor connected graph.
 		for (int i = 0; i < 4; i++)
 		{
