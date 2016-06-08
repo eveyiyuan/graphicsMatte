@@ -21,4 +21,17 @@ double Dijkstra(double * P_f, int R, int C, Point * s, Point * t);
 // (either the foreground or the background scribble).
 double getDistance(double * P_f, int R, int C, vector<Point> scribble, Point x);
 
+double DijkstraR(double * P_f, int R, int C, Point * s, Point * t);
+double getDistanceR(double * P_f, int R, int C, vector<Point> scribble, Point x);
+
+vector<double> getDists(double * P_f, int R, int C, vector<Point> scribble);
+
+void GeodesicDistanceMap(const std::vector<Point>& sources,
+double* height,
+int W,
+int H,
+double* dists);
+
+double * test(double * P_f, int R, int C, vector<Point> scribble);
+
 #endif //_GEODESIC_H_
