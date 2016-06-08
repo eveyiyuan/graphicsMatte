@@ -174,7 +174,7 @@ int main(int argc, char**argv)
 	cerr << endl;
 
 	for(unsigned int r = 0; r < input.rows; r++) {
-		cerr << "Processed row " << r  << endl;
+		//cerr << "Processed row " << r  << endl;
 		for(unsigned int c = 0; c < input.cols; c++) {
 			/*if(P_Fx[input.cols*r + c] > P_Bx[input.cols*r + c]) {
 				grey.at<uchar>(r, c) = 255;
@@ -204,11 +204,8 @@ int main(int argc, char**argv)
 				grey.at<uchar>(r, c) = 0;
 				//cerr << "Pixel (" << r << ", " << c << ")" << "is in the background." << endl;
 			}
-<<<<<<< HEAD
-			//cerr << "Processed pixel ( " << r << ", " << c << ")" << endl;
-=======
+
 			//cerr << "Processed pixel (" << r << ", " << c << ")" << endl;
->>>>>>> 6c4a481696bc135ff7dabb46e86784e5ba236ca2
 		}
 		
 	}
