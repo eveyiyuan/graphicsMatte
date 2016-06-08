@@ -152,6 +152,17 @@ int main(int argc, char**argv)
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Fx, false);
 	bgforeProb(fore_probs, bg_probs, input.cols, input.rows, P_Bx, true);
 
+	// double * fdist = test(P_Fx, input.rows, input.cols, fore);
+	// double * bdist = test(P_Bx, input.rows, input.cols, bg);
+
+	vector<double> fdist = getDists(P_Fx, input.rows, input.cols, fore);
+	cerr << endl;
+	cerr << "Finished fdist!" << endl;
+	vector<double> bdist = getDists(P_Bx, input.rows, input.cols, bg);
+	cerr << endl;
+	cerr << "Finished bdist!" << endl;
+	cerr << endl;
+
 	for(unsigned int r = 0; r < input.rows; r++) {
 		cerr << "Processed row " << r  << endl;
 		for(unsigned int c = 0; c < input.cols; c++) {
@@ -164,20 +175,30 @@ int main(int argc, char**argv)
 			else {
 				grey.at<uchar>(r, c) = 255/2;
 			}*/
-			Point p;
-			p.x = r;
-			p.y = c;
-			double D_f = getDistance(P_Fx, input.rows, input.cols, fore, p);
-			double D_b = getDistance(P_Bx, input.rows, input.cols, bg, p);
+			// Point p;
+			// p.x = r;
+			// p.y = c;
+			// double D_f = getDistanceR(P_Fx, input.rows, input.cols, fore, p);
+			// double D_b = getDistanceR(P_Bx, input.rows, input.cols, bg, p);
+			double D_f = fdist[r * input.cols + c];
+			double D_b = bdist[r * input.cols + c];
+			cerr << "D_f is " << D_f << endl;
+			cerr << "D_b is " << D_b << endl;
 			if (D_f < D_b)
 			{
 				grey.at<uchar>(r, c) = 255;
+				cerr << "Pixel (" << r << ", " << c << ")" << "is in the foreground." << endl;
 			}
 			else
 			{
 				grey.at<uchar>(r, c) = 0;
+				cerr << "Pixel (" << r << ", " << c << ")" << "is in the background." << endl;
 			}
+<<<<<<< HEAD
 			//cerr << "Processed pixel ( " << r << ", " << c << ")" << endl;
+=======
+			//cerr << "Processed pixel (" << r << ", " << c << ")" << endl;
+>>>>>>> 6c4a481696bc135ff7dabb46e86784e5ba236ca2
 		}
 		
 	}
